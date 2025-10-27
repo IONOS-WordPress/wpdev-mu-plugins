@@ -73,6 +73,28 @@ function _install()
 
     case version_compare($last_installed_version, '1.0.0', '<'):
 
+      // Install and activate Extendify plugin
+      if (!\is_plugin_active('extendify/extendify.php')) {
+        include_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+        include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+        include_once ABSPATH . 'wp-admin/includes/plugin.php';
+        
+        $plugin_slug = 'extendify';
+        $plugin_file = 'extendify/extendify.php';
+        
+        // Check if plugin is already installed
+        if (!file_exists(WP_PLUGIN_DIR . '/' . $plugin_file)) {
+          $api = plugins_api('plugin_information', ['slug' => $plugin_slug]);
+          if (!is_wp_error($api)) {
+            $upgrader = new \Plugin_Upgrader(new \WP_Ajax_Upgrader_Skin());
+            $upgrader->install($api->download_link);
+          }
+        }
+        
+        // Activate the plugin
+        \activate_plugin($plugin_file);
+      }
+
       // keep consent for ionos loop to use it later on in dashboard
       $ionos_loop_consent_given = \get_option('ionos_loop_consent', false);
 
