@@ -13,11 +13,7 @@
   <?php
   use const ionos\essentials\PLUGIN_FILE;
 
-  \wp_register_style(
-    handle: 'ionos-exos',
-    src: 'https://ce1.uicdn.net/exos/framework/3.0/exos.min.css',
-    ver: '3.0',
-  );
+  \wp_register_style('ionos-exos', 'https://ce1.uicdn.net/exos/framework/3.0/exos.min.css', [], '3.0');
 
   \wp_print_styles(['ionos-exos']);
 

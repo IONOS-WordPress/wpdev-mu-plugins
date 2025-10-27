@@ -42,8 +42,8 @@ $siteeditor_quick_link = $_GET['ionos-siteeditor-quick-link'] ?? '';
 if ('' !== $siteeditor_quick_link) {
   \add_action('enqueue_block_editor_assets', function () use ($siteeditor_quick_link) {
     \wp_add_inline_script(
-      handle: 'wp-edit-site',
-      data: "
+      'wp-edit-site',
+      "
         wp.domReady(async function() {
           // Wait for the editor to be ready
           await new Promise((resolve) => {
@@ -77,7 +77,7 @@ if ('' !== $siteeditor_quick_link) {
           }, 500);
         });
       ",
-      position: 'after',
+      'after',
     );
   });
 }

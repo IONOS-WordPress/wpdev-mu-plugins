@@ -10,23 +10,46 @@ defined('ABSPATH') || exit();
 
 class Tenant
 {
-  private readonly string $_label;
+  /**
+   * @readonly
+   */
+  private string $_slug;
+  /**
+   * @readonly
+   */
+  private string $_label;
 
   private static ?Tenant $instance = null;
 
-  private function __construct(
-    private readonly string $_slug
-  ) {
-    $this->_label = match ($_slug) {
-      'ionos'     => 'IONOS',
-      'fasthosts' => 'Fasthosts',
-      'homepl'    => 'home.pl',
-      'arsys'     => 'Arsys',
-      'piensa'    => 'Piensa Solutions',
-      'strato'    => 'STRATO',
-      'udag'      => 'United Domains',
-      default     => 'IONOS',
-    };
+  private function __construct(string $_slug)
+  {
+      $this->_slug = $_slug;
+      switch ($_slug) {
+          case 'ionos':
+              $this->_label = 'IONOS';
+              break;
+          case 'fasthosts':
+              $this->_label = 'Fasthosts';
+              break;
+          case 'homepl':
+              $this->_label = 'home.pl';
+              break;
+          case 'arsys':
+              $this->_label = 'Arsys';
+              break;
+          case 'piensa':
+              $this->_label = 'Piensa Solutions';
+              break;
+          case 'strato':
+              $this->_label = 'STRATO';
+              break;
+          case 'udag':
+              $this->_label = 'United Domains';
+              break;
+          default:
+              $this->_label = 'IONOS';
+              break;
+      }
   }
 
   public static function get_slug(): string

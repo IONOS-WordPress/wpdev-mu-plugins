@@ -10,6 +10,46 @@ defined('ABSPATH') || exit();
 
 class NBA
 {
+  /**
+   * @readonly
+   */
+  public string $id;
+  /**
+   * @readonly
+   */
+  public string $title;
+  /**
+   * @readonly
+   */
+  public string $description;
+  /**
+   * @readonly
+   */
+  public string $link;
+  /**
+   * @readonly
+   */
+  public string $anchor;
+  /**
+   * @readonly
+   */
+  private bool $completed;
+  /**
+   * @readonly
+   */
+  public bool $complete_on_click;
+  /**
+   * @readonly
+   */
+  public array $categories;
+  /**
+   * @readonly
+   */
+  public string $exos_icon;
+  /**
+   * @readonly
+   */
+  public bool $expanded;
   public const OPTION_STATUS_NAME = 'ionos_nba_status';
 
   private static $option_value;
@@ -17,17 +57,27 @@ class NBA
   private static array $actions = [];
 
   private function __construct(
-    public readonly string $id,
-    public readonly string $title,
-    public readonly string $description,
-    public readonly string $link,
-    public readonly string $anchor,
-    private readonly bool $completed,
-    public readonly bool $complete_on_click,
-    public readonly array $categories,
-    public readonly string $exos_icon,
-    public readonly bool $expanded
+    string $id,
+    string $title,
+    string $description,
+    string $link,
+    string $anchor,
+    bool $completed,
+    bool $complete_on_click,
+    array $categories,
+    string $exos_icon,
+    bool $expanded
   ) {
+    $this->id = $id;
+    $this->title = $title;
+    $this->description = $description;
+    $this->link = $link;
+    $this->anchor = $anchor;
+    $this->completed = $completed;
+    $this->complete_on_click = $complete_on_click;
+    $this->categories = $categories;
+    $this->exos_icon = $exos_icon;
+    $this->expanded = $expanded;
     self::$actions[$this->id] = $this;
     require_once __DIR__ . '/config.php';
   }
@@ -54,7 +104,7 @@ class NBA
     return self::_set_option($option);
   }
 
-  public static function get_nba($id): self|null
+  public static function get_nba($id): ?self
   {
     require_once __DIR__ . '/config.php';
     return self::$actions[$id];

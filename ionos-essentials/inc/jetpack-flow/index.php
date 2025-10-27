@@ -41,7 +41,7 @@ const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
 });
 
 \add_action('init', function (): void {
-  if (str_contains(\wp_login_url(), $_SERVER['SCRIPT_NAME'])) {
+  if (strpos(\wp_login_url(), $_SERVER['SCRIPT_NAME']) !== false) {
     \add_filter(
       'ionos_login_redirect_to',
       function ($redirect_to, $requested_redirect_to, $logged_user): string {
@@ -91,11 +91,11 @@ const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
 
   $menu_page_title = __('Assistant', 'ionos-essentials');
   \add_menu_page(
-    page_title: $menu_page_title,
-    menu_title: $menu_page_title,
-    capability: 'manage_options',
-    menu_slug: HIDDEN_PAGE_SLUG,
-    callback: function () {
+    $menu_page_title,
+    $menu_page_title,
+    'manage_options',
+    HIDDEN_PAGE_SLUG,
+    function () {
       $step = $_GET['step'] ?? 'confirm';
       if ('install' === $step) {
         _render_install();

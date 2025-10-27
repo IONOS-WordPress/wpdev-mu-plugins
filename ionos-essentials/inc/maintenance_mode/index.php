@@ -42,7 +42,7 @@ add_action('init', function () {
     return;
   }
 
-  if ('wp-login.php' === $GLOBALS['pagenow'] || str_starts_with($_SERVER['REQUEST_URI'], '/wp-admin')) {
+  if ('wp-login.php' === $GLOBALS['pagenow'] || strncmp($_SERVER['REQUEST_URI'], '/wp-admin', strlen('/wp-admin')) === 0) {
     return;
   }
 

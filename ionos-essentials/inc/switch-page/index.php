@@ -69,7 +69,7 @@ defined('ABSPATH') || exit();
 \add_action(
   'admin_enqueue_scripts',
   function ($hook_suffix) {
-    if (! str_contains($hook_suffix, '_page_' . Tenant::get_slug() . '-onboarding')) {
+    if (strpos($hook_suffix, '_page_' . Tenant::get_slug() . '-onboarding') === false) {
       return;
     }
     \wp_enqueue_style(

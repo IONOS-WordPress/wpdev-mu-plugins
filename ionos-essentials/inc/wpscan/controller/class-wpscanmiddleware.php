@@ -10,7 +10,10 @@ class WPScanMiddleware
 
   private string $error = '';
 
-  public function get_instant_data(string $type, string $slug): bool|string
+  /**
+   * @return bool|string
+   */
+  public function get_instant_data(string $type, string $slug)
   {
     $token = \get_option('ionos_security_wpscan_token', '');
     if (empty($token)) {
@@ -63,7 +66,10 @@ class WPScanMiddleware
     return ($highest_score >= 7) ? 'criticals_found' : 'warnings_found';
   }
 
-  public function download_wpscan_data(): bool|array
+  /**
+   * @return mixed[]|bool
+   */
+  public function download_wpscan_data()
   {
     $url   = self::URL;
     $token = \get_option('ionos_security_wpscan_token', '');

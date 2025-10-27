@@ -34,32 +34,24 @@ const REQUIRED_USER_CAPABILITIES = 'read';
     $tenant_icon = 'data:image/svg+xml;base64,' . base64_encode($svg);
   }
 
-  \add_menu_page(
-    page_title : IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE,
-    menu_title : IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE,
-    capability : REQUIRED_USER_CAPABILITIES,
-    menu_slug  : ADMIN_PAGE_SLUG,
-    icon_url   : $tenant_icon,
-    position: 1,
-    // no callback because submenu page renders content
-  );
+  \add_menu_page(IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE, IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE, REQUIRED_USER_CAPABILITIES, ADMIN_PAGE_SLUG, '', $tenant_icon, 1);
 
   // add submenu with same menu_slug as parent so that title of sub is different
   \add_submenu_page(
-    parent_slug: ADMIN_PAGE_SLUG,
-    page_title : __('Overview', 'ionos-essentials'),
-    menu_title : __('Overview', 'ionos-essentials'),
-    capability : REQUIRED_USER_CAPABILITIES,
-    menu_slug  : ADMIN_PAGE_SLUG,
-    callback   : fn () => require_once __DIR__ . '/view.php',
+    ADMIN_PAGE_SLUG,
+    __('Overview', 'ionos-essentials'),
+    __('Overview', 'ionos-essentials'),
+    REQUIRED_USER_CAPABILITIES,
+    ADMIN_PAGE_SLUG,
+    fn () => require_once __DIR__ . '/view.php',
   );
 
   \add_submenu_page(
-    parent_slug: ADMIN_PAGE_SLUG,
-    page_title : __('Tools & Security', 'ionos-essentials'),
-    menu_title : __('Tools & Security', 'ionos-essentials'),
-    capability : REQUIRED_USER_CAPABILITIES,
-    menu_slug  : 'admin.php?page=' . ADMIN_PAGE_SLUG . '#tools'
+    ADMIN_PAGE_SLUG,
+    __('Tools & Security', 'ionos-essentials'),
+    __('Tools & Security', 'ionos-essentials'),
+    REQUIRED_USER_CAPABILITIES,
+    'admin.php?page=' . ADMIN_PAGE_SLUG . '#tools'
   );
 
   // we stop ionos-library from removing our submenu item
@@ -94,19 +86,15 @@ if (\get_option('ionos_essentials_dashboard_mode', true)) {
 }
 
 // fixes the displayed page title for our custom admin page.
-\add_filter(
-  hook_name: 'admin_title',
-  callback: function ($admin_title, $title) {
-    if (ADMIN_PAGE_HOOK === \get_current_screen()?->id) {
-      return IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE;
-    }
-    return $admin_title;
-  },
-  accepted_args : 2
-);
+\add_filter('admin_title', function ($admin_title, $title) {
+  if (ADMIN_PAGE_HOOK === (($nullsafeVariable1 = \get_current_screen()) ? $nullsafeVariable1->id : null)) {
+    return IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE;
+  }
+  return $admin_title;
+}, 10, 2);
 
 add_filter('admin_body_class', function ($classes) {
-  if (ADMIN_PAGE_HOOK === \get_current_screen()?->id) {
+  if (ADMIN_PAGE_HOOK === (($nullsafeVariable2 = \get_current_screen()) ? $nullsafeVariable2->id : null)) {
     $classes .= ' ionos-dashboard';
   }
   return $classes;
@@ -202,6 +190,7 @@ add_filter('admin_body_class', function ($classes) {
 \add_action(
   'wp_ajax_ionos-nba-setup-complete',
   function () {
+    require_once __DIR__ . '/blocks/next-best-actions/index.php';
     $status = (string) $_POST['status'] ?? 'unknown';
     if (empty($_POST['_wpnonce']) || ! wp_verify_nonce($_POST['_wpnonce'], 'wp_rest')) {
       wp_send_json_error([

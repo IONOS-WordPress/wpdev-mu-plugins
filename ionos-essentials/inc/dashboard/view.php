@@ -111,19 +111,11 @@ require_once __DIR__ . '/blocks/site-health/index.php';
 $tenant     =  Tenant::get_slug();
 $theme_file = __DIR__ . '/exos-themes/' . $tenant . '.css';
 if (file_exists($theme_file)) {
-  \wp_register_style(
-    handle: 'exos-theme',
-    src: \plugins_url($tenant . '.css', $theme_file),
-    ver: filemtime($theme_file)
-  );
+  \wp_register_style('exos-theme', \plugins_url($tenant . '.css', $theme_file), [], filemtime($theme_file));
   \wp_print_styles(['exos-theme']);
 }
 
-\wp_register_style(
-  handle: 'ionos-essentials-dashboard',
-  src: \plugin_dir_url(__FILE__) . 'dashboard.css',
-  ver: filemtime(\plugin_dir_path(__FILE__) . 'dashboard.css')
-);
+\wp_register_style('ionos-essentials-dashboard', \plugin_dir_url(__FILE__) . 'dashboard.css', [], filemtime(\plugin_dir_path(__FILE__) . 'dashboard.css'));
 \wp_print_styles(['ionos-essentials-dashboard', 'ionos-wpscan']);
 
 \wp_register_script('ionos-exos-js', 'https://ce1.uicdn.net/exos/framework/3.0/exos.min.js', [], true);

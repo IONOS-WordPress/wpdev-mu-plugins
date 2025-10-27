@@ -169,7 +169,7 @@ function _install()
       //     _register_at_datacollector();
       //   }
   }
-  \update_option(option: WP_OPTION_LAST_INSTALL_DATA, value: $current_install_data, autoload: true);
+  \update_option(WP_OPTION_LAST_INSTALL_DATA, $current_install_data, true);
 }
 
 function update_plugin($plugin_slug, $activate = true)

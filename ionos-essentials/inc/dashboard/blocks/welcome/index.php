@@ -8,7 +8,7 @@ use ionos\essentials\Tenant;
 
 function render_callback(): void
 {
-  $user_meta = \get_user_meta(user_id: \get_current_user_id(), key: 'ionos_essentials_welcome', single: true);
+  $user_meta = \get_user_meta(\get_current_user_id(), 'ionos_essentials_welcome', true);
 
   if (! empty($user_meta)) {
     return;

@@ -5,7 +5,7 @@
  * Description:       The essentials plugin provides IONOS hosting specific functionality.
  * Requires at least: 6.6
  * Requires Plugins:
- * Requires PHP:      8.2
+ * Requires PHP:      7.4
  * Version:           1.3.1
  * Update URI:        https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/ionos-essentials-info.json
  * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials
@@ -27,12 +27,9 @@ defined('ABSPATH') || exit();
   'init',
   function () {
     if (__DIR__ === WPMU_PLUGIN_DIR) {
-      \load_muplugin_textdomain(domain: 'ionos-essentials', mu_plugin_rel_path: 'ionos-essentials/languages/');
+      \load_muplugin_textdomain('ionos-essentials', 'ionos-essentials/languages/');
     } else {
-      \load_plugin_textdomain(
-        domain: 'ionos-essentials',
-        plugin_rel_path: 'ionos-essentials/ionos-essentials/languages/'
-      );
+      \load_plugin_textdomain('ionos-essentials', false, 'ionos-essentials/ionos-essentials/languages/');
     }
   }
 );
@@ -122,7 +119,7 @@ require_once __DIR__ . '/ionos-essentials/inc/migration/index.php';
 
 function is_stretch(): bool
 {
-  return str_starts_with(getcwd(), '/home/www/public');
+  return strncmp(getcwd(), '/home/www/public', strlen('/home/www/public')) === 0;
 }
 
 // TODO: evaluate for other tenants than IONOS

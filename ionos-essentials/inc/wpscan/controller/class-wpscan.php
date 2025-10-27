@@ -10,7 +10,10 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY;
 
 class WPScan
 {
-  private array|bool $issues;
+  /**
+   * @var mixed[]|bool
+   */
+  private $issues;
 
   private ?string $error = null;
 

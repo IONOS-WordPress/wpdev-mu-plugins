@@ -7,29 +7,25 @@ const IONOS_NOREPLY_EMAIL          = 'no-reply@wpservice.io';
 
 defined('ABSPATH') || exit();
 
-\add_action(
-  hook_name: 'check_passwords',
-  callback: function ($user_login, $pass1, $pass2) {
-    if (empty($pass1) || $pass1 !== $pass2) {
-      return;
-    }
+\add_action('check_passwords', function ($user_login, $pass1, $pass2) {
+  if (empty($pass1) || $pass1 !== $pass2) {
+    return;
+  }
 
-    if (! is_leaked($pass1)) {
-      $user = \wp_get_current_user();
-      \update_user_meta($user->ID, LEAKED_CREDENTIALS_FLAG_NAME, false);
-      return;
-    }
+  if (! is_leaked($pass1)) {
+    $user = \wp_get_current_user();
+    \update_user_meta($user->ID, LEAKED_CREDENTIALS_FLAG_NAME, false);
+    return;
+  }
 
-    \add_action(
-      'user_profile_update_errors',
-      fn (\WP_Error $errors) => $errors->add(
-        'password_leaked',
-        __('The entered password has already been leaked. Please choose another one.', 'ionos-essentials')
-      )
-    );
-  },
-  accepted_args : 3
-);
+  \add_action(
+    'user_profile_update_errors',
+    fn (\WP_Error $errors) => $errors->add(
+      'password_leaked',
+      __('The entered password has already been leaked. Please choose another one.', 'ionos-essentials')
+    )
+  );
+}, 10, 3);
 
 if (is_login()) {
   \add_action('login_form_icc_leak_detected', function () {
@@ -42,31 +38,27 @@ if (is_login()) {
     }
   });
 
-  \add_action(
-    hook_name: 'validate_password_reset',
-    callback : function ($errors, $user) {
-      $pass1 = filter_input(INPUT_POST, 'pass1');
-      $pass2 = filter_input(INPUT_POST, 'pass2');
+  \add_action('validate_password_reset', function ($errors, $user) {
+    $pass1 = filter_input(INPUT_POST, 'pass1');
+    $pass2 = filter_input(INPUT_POST, 'pass2');
 
-      if (empty($pass1) || $pass1 !== $pass2) {
-        return;
-      }
+    if (empty($pass1) || $pass1 !== $pass2) {
+      return;
+    }
 
-      if (true === is_leaked($pass1)) {
-        $errors->add(
-          'password_leaked',
-          __('The entered password has already been leaked. Please choose another one.', 'ionos-essentials')
-        );
-      } else {
-        \update_user_meta($user->ID, LEAKED_CREDENTIALS_FLAG_NAME, false);
-      }
-    },
-    accepted_args : 2
-  );
+    if (true === is_leaked($pass1)) {
+      $errors->add(
+        'password_leaked',
+        __('The entered password has already been leaked. Please choose another one.', 'ionos-essentials')
+      );
+    } else {
+      \update_user_meta($user->ID, LEAKED_CREDENTIALS_FLAG_NAME, false);
+    }
+  }, 10, 2);
 
   \add_filter(
-    hook_name: 'authenticate',
-    callback : function ($user, $username, $password) {
+    'authenticate',
+    function ($user, $username, $password) {
       if (\is_wp_error($user) || null === $user || empty($password)) {
         return $user;
       }
@@ -84,8 +76,8 @@ if (is_login()) {
       }
 
       \add_filter(
-        hook_name : 'ionos_login_redirect_to',
-        callback : function () use ($user) {
+        'ionos_login_redirect_to',
+        function () use ($user) {
           \wp_logout();
 
           $user_login = filter_input(INPUT_POST, 'log');
@@ -103,15 +95,15 @@ if (is_login()) {
           \wp_safe_redirect($url);
           exit;
         },
-        priority : 200
+        200
       );
       return new \WP_Error(
         'ionos_password_leaked',
         __('It looks like your password has been compromised. To protect the security of your account, it‘s crucial that you change your password immediately. This will ensure that your personal and sensitive information remains safe and secure. An email was sent to your email address. Please follow the instruction to reset your password.', 'ionos-essentials')
       );
     },
-    priority : 100,
-    accepted_args : 3
+    100,
+    3
   );
 }
 
@@ -167,7 +159,7 @@ function is_leaked($password): ?bool
     return null;
   }
 
-  return str_contains(\wp_remote_retrieve_body($response), $suffix);
+  return strpos(\wp_remote_retrieve_body($response), $suffix) !== false;
 }
 
 function has_leaked_flag($user_id): bool

@@ -75,20 +75,16 @@ function _register_at_datacollector(): bool
 });
 
 // log loop endpoint errors to error log
-\add_filter(
-  hook_name : 'rest_request_after_callbacks',
-  callback: function ($response, array $handler, WP_REST_Request $request) {
-    $loop_endpoint_path = '/' . IONOS_LOOP_REST_NAMESPACE . IONOS_LOOP_REST_ENDPOINT;
+\add_filter('rest_request_after_callbacks', function ($response, array $handler, WP_REST_Request $request) {
+  $loop_endpoint_path = '/' . IONOS_LOOP_REST_NAMESPACE . IONOS_LOOP_REST_ENDPOINT;
 
-    if (\is_wp_error($response) && $request->get_route() === $loop_endpoint_path) {
-      error_log(sprintf(
-        'loop: Failed to process loop request(%s) : %s',
-        join(', ', $response->get_error_codes()),
-        join(PHP_EOL, $response->get_error_messages()),
-      ));
-    }
+  if (\is_wp_error($response) && $request->get_route() === $loop_endpoint_path) {
+    error_log(sprintf(
+      'loop: Failed to process loop request(%s) : %s',
+      join(', ', $response->get_error_codes()),
+      join(PHP_EOL, $response->get_error_messages()),
+    ));
+  }
 
-    return $response;
-  },
-  accepted_args: 3
-);
+  return $response;
+}, 10, 3);

@@ -36,7 +36,10 @@ const IONOS_LOOP_ALLOW_LIST_IP6 = [
 const IONOS_LOOP_DATACOLLECTOR_PUBLICKEY_TRANSIENT = 'ionos-essentials-loop-datacollector-public-key';
 const IONOS_LOOP_DATACOLLECTOR_PUBLIC_KEY_URL      = 'https://s3-de-central.profitbricks.com/web-hosting/ionos/live/config/loop/public-key.pem';
 
-function _rest_permissions_check(WP_REST_Request $request): bool|WP_Error
+/**
+ * @return bool|\WP_Error
+ */
+function _rest_permissions_check(WP_REST_Request $request)
 {
   // skip permission check for wp-env/local/dev environments
   if (in_array(\wp_get_environment_type(), ['local', 'development'], true)) {
@@ -146,12 +149,20 @@ function _ipv6_in_cidr(string $ipv6, string $cidr): bool
   $binary_mask = str_pad($binary_mask, 32, '0');
   $binary_mask = pack('H*', $binary_mask);
 
-  $address = match ($subnet_mask % 4) {
-    0 => $address,
-    1 => $address . '8',
-    2 => $address . 'c',
-    3 => $address . 'e',
-  };
+  switch ($subnet_mask % 4) {
+      case 0:
+          $address = $address;
+          break;
+      case 1:
+          $address = $address . '8';
+          break;
+      case 2:
+          $address = $address . 'c';
+          break;
+      case 3:
+          $address = $address . 'e';
+          break;
+  }
 
   return ($address & $binary_mask) === $subnet;
 }
@@ -188,7 +199,10 @@ function _is_valid_authorization_header(string $authorization_header, string $pu
   return false;
 }
 
-function _get_public_key(): string|WP_Error
+/**
+ * @return string|\WP_Error
+ */
+function _get_public_key()
 {
   $cached_key = \get_transient(IONOS_LOOP_DATACOLLECTOR_PUBLICKEY_TRANSIENT);
   if ($cached_key !== false) {

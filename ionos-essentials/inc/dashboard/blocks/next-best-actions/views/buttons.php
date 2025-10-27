@@ -7,7 +7,7 @@ defined('ABSPATH') || exit();
 function create_buttons(NBA $action, $string = '')
 {
   $target = false === strpos(\esc_url($action->link), home_url()) ? '_blank' : '_top';
-  if (str_starts_with(($action->link), '#')) {
+  if (strncmp(($action->link), '#', strlen('#')) === 0) {
     $target = '';
   }
   $buttons = sprintf(
