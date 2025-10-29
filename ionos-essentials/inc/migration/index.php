@@ -95,6 +95,27 @@ function _install()
         \activate_plugin($plugin_file);
       }
 
+      // install and activate the extendable theme
+      if (!\wp_get_theme('extendable')->exists()) {
+        include_once ABSPATH . 'wp-admin/includes/theme-install.php';
+        include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+        include_once ABSPATH . 'wp-admin/includes/theme.php';
+        
+        $theme_slug = 'extendable';
+        
+        // Check if theme is already installed
+        if (!file_exists(WP_CONTENT_DIR . '/themes/' . $theme_slug)) {
+          $api = themes_api('theme_information', ['slug' => $theme_slug]);
+          if (!is_wp_error($api)) {
+        $upgrader = new \Theme_Upgrader(new \WP_Ajax_Upgrader_Skin());
+        $upgrader->install($api->download_link);
+          }
+        }
+        
+        // Activate the theme
+        \switch_theme($theme_slug);
+      }
+
       // keep consent for ionos loop to use it later on in dashboard
       $ionos_loop_consent_given = \get_option('ionos_loop_consent', false);
 
