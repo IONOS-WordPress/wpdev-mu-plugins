@@ -1,0 +1,119 @@
+/* Adding CSS classes should be done with consideration and rarely */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.extendify-launch button:not(:disabled) {
+	@apply cursor-pointer;
+}
+
+.extendify-launch {
+	--tw-ring-inset: var(--tw-empty, /*!*/ /*!*/);
+	--tw-ring-offset-width: 0px;
+	--tw-ring-offset-color: transparent;
+	--tw-ring-color: var(--ext-design-main, #2c39bd);
+	--tw-translate-x: 0;
+	--tw-translate-y: 0;
+	--tw-rotate: 0;
+	--tw-skew-x: 0;
+	--tw-skew-y: 0;
+	--tw-scale-x: 1;
+	--tw-scale-y: 1;
+}
+
+.extendify-launch *,
+.extendify-launch *:after,
+.extendify-launch *:before {
+	box-sizing: border-box;
+	border: 0 solid #e5e7eb;
+}
+
+.extendify-launch {
+	-webkit-font-smoothing: antialiased;
+}
+
+.extendify-launch .button-focus {
+	@apply rounded-lg text-center text-base no-underline outline-none ring-design-main ring-offset-2 ring-offset-white focus:shadow-none focus:ring-wp;
+}
+
+.extendify-launch .input-focus {
+	@apply rounded-lg text-base outline-none ring-design-main ring-offset-2 ring-offset-white focus:shadow-none focus:ring-wp;
+}
+
+.extendify-launch .button-card {
+	@apply m-0 block flex-1 overflow-hidden border p-4;
+}
+
+.extendify-launch .block-editor-block-preview__container {
+	overflow: visible !important;
+}
+
+.extendify-launch .spin {
+	animation: extendify-loading-spinner 1s linear infinite;
+}
+
+@keyframes extendify-loading-spinner {
+	to {
+		transform: rotate(1turn);
+	}
+}
+@keyframes extendify-loading-skeleton {
+	0% {
+		background-position: 0 0;
+	}
+	25% {
+		background-position: 100% 0;
+	}
+	50% {
+		background-position: 100% 100%;
+	}
+	75% {
+		background-position: 0 100%;
+	}
+	100% {
+		background-position: 0 0;
+	}
+}
+
+/* Checkbox styles for page selection step. */
+.extendify-launch input[type="checkbox"]:not(:checked) {
+	@apply border border-gray-900;
+}
+.extendify-launch input[type="checkbox"]:focus {
+	@apply outline-none ring-wp ring-design-main ring-offset-2 ring-offset-white;
+}
+.extendify-launch input[type="checkbox"]:checked {
+	@apply bg-design-main;
+}
+.extendify-launch input[type="checkbox"]:checked::before {
+	content: "";
+	width: 0 !important;
+	height: 0 !important;
+}
+
+/* Goal checkbox */
+.extendify-launch .goal-select .components-base-control__field {
+	@apply mb-0;
+}
+.block-editor-block-preview__content {
+	@apply left-0 top-0 m-0 overflow-visible;
+	transform-origin: top left;
+	text-align: initial;
+	min-height: auto;
+}
+
+html[dir="rtl"] .block-editor-block-preview__content {
+	transform-origin: top right;
+}
+
+body.site-assistant_page_extendify-launch,
+body.site-launcher_page_extendify-launch {
+	background: white;
+}
+
+.site-assistant_page_extendify-launch #adminmenumain,
+.site-launcher_page_extendify-launch #adminmenumain,
+.site-assistant_page_extendify-launch #wpadminbar,
+.site-launcher_page_extendify-launch #wpadminbar {
+	display: none;
+}

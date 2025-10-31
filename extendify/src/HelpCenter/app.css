@@ -1,0 +1,58 @@
+/* Adding CSS classes should be done with consideration and rarely */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.extendify-help-center button:not(:disabled) {
+	@apply cursor-pointer;
+}
+
+.extendify-help-center {
+	--tw-ring-inset: var(--tw-empty, /*!*/ /*!*/);
+	--tw-ring-offset-width: 0px;
+	--tw-ring-offset-color: transparent;
+	--tw-ring-color: var(--ext-design-main, #2c39bd);
+	--tw-translate-x: 0;
+	--tw-translate-y: 0;
+	--tw-rotate: 0;
+	--tw-skew-x: 0;
+	--tw-skew-y: 0;
+	--tw-scale-x: 1;
+	--tw-scale-y: 1;
+}
+
+.extendify-help-center *,
+.extendify-help-center *:after,
+.extendify-help-center *:before {
+	box-sizing: border-box;
+	border: 0 solid #e5e7eb;
+}
+
+.extendify-chat-button:hover:after {
+	content: "";
+	@apply absolute left-0 top-0 h-full w-full bg-white/20;
+}
+
+.extendify-help-center .ask-another-question {
+	box-shadow:
+		0 -20px 25px -5px rgb(0 0 0 / 0.05),
+		0 -8px 10px -6px rgb(0 0 0 / 0.05);
+}
+
+.extendify-help-center .animate-pulse {
+	animation: extendifyChatPulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+#wp-admin-bar-help-center-btn.extendify-help-center {
+	@apply mt-2 block md:mt-0;
+}
+
+@keyframes extendifyChatPulse {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.5;
+	}
+}

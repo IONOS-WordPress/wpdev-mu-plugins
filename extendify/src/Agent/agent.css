@@ -1,0 +1,158 @@
+/* Adding CSS classes should be done with consideration and rarely */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.extendify-agent button:not(:disabled) {
+	@apply cursor-pointer;
+}
+
+.extendify-agent {
+	--tw-ring-inset: var(--tw-empty, /*!*/ /*!*/);
+	--tw-ring-offset-width: 0px;
+	--tw-ring-offset-color: transparent;
+	--tw-ring-color: var(--ext-design-main, #2c39bd);
+	--tw-translate-x: 0;
+	--tw-translate-y: 0;
+	--tw-rotate: 0;
+	--tw-skew-x: 0;
+	--tw-skew-y: 0;
+	--tw-scale-x: 1;
+	--tw-scale-y: 1;
+}
+
+.extendify-agent *,
+.extendify-agent *:after,
+.extendify-agent *:before {
+	/* no !important */
+	box-sizing: border-box;
+	border: 0 solid #e5e7eb;
+}
+.extendify-agent [data-extendify-agent-handle]:active {
+	@apply cursor-grabbing;
+}
+.extendify-agent [data-extendify-agent-resize]:active {
+	@apply cursor-grabbing;
+}
+.extendify-agent-markdown h1 {
+	@apply mb-2 mt-4 text-2xl font-bold;
+}
+.extendify-agent-markdown h2 {
+	@apply mb-2 mt-4 text-xl font-semibold;
+}
+.extendify-agent-markdown h3 {
+	@apply mb-1 mt-3 text-lg font-semibold;
+}
+.extendify-agent-markdown p {
+	@apply m-0 mb-2 text-sm leading-relaxed text-gray-900;
+}
+.extendify-agent-markdown ul {
+	@apply my-2 list-disc pl-2 text-sm text-gray-900;
+}
+.extendify-agent-markdown ol {
+	@apply my-2 list-decimal pl-2 text-sm text-gray-900;
+}
+.extendify-agent-markdown li {
+	@apply mb-1 text-sm text-gray-900;
+}
+.extendify-agent-markdown pre {
+	@apply my-2 overflow-x-auto rounded bg-gray-100 p-2 text-sm;
+	white-space: pre;
+}
+.extendify-agent-markdown pre code {
+	@apply bg-transparent p-0 font-mono text-xs;
+	white-space: pre;
+}
+.extendify-agent-markdown blockquote {
+	@apply my-2 border-l-4 border-gray-300 pl-4 text-sm italic text-gray-600;
+}
+.extendify-agent-markdown a {
+	@apply text-sm text-blue-600 underline transition-colors hover:text-blue-800;
+}
+.extendify-gradient-animation {
+	animation: extendify-gradient-animation 5s linear infinite;
+	background-image: linear-gradient(
+		to right,
+		#fff 0%,
+		#fff 20%,
+		var(--ext-design-main, #2c39bd) 40%,
+		var(--ext-design-secondary, #40ffaa) 55%,
+		var(--ext-design-tertiary, #4079ff) 80%,
+		#fff 90%,
+		#fff 100%
+	);
+	background-size: 500% 100%;
+	color: transparent;
+	background-clip: text;
+	-webkit-background-clip: text;
+	animation: extendify-gradient-animation 1.5s linear forwards;
+}
+@keyframes extendify-gradient-animation {
+	0% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.extendify-agent .status-animation {
+	background-image: linear-gradient(
+		to right,
+		#1e1e1e 0% 40%,
+		#cccccc 55%,
+		#1e1e1e 60% 100%
+	);
+	background-size: 200% 100%;
+	color: transparent;
+	background-clip: text;
+	-webkit-background-clip: text;
+	animation: extendify-status-animation 2.5s linear infinite;
+}
+@keyframes extendify-status-animation {
+	0% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 00% 50%;
+	}
+}
+
+body.extendify-agent-mobile-btn-open #site-editor {
+	min-height: calc(
+		100% - var(--extendify-agent-mobile-btn-height, 64px)
+	) !important;
+	height: calc(
+		100vh - var(--extendify-agent-mobile-btn-height, 64px)
+	) !important;
+}
+body.extendify-agent-mobile-btn-open .block-editor-block-inspector {
+	padding-bottom: var(--extendify-agent-mobile-btn-height, 64px);
+}
+body.extendify-agent-mobile-btn-open
+	.edit-site
+	.components-editor-notices__snackbar {
+	bottom: calc(
+		var(--extendify-agent-mobile-btn-height, 64px) + 16px
+	) !important;
+}
+
+.extendify-agent-highlighter-mode {
+	cursor: crosshair !important;
+	user-select: none !important;
+}
+.extendify-agent-highlighter-mode.extendify-agent-busy {
+	cursor: not-allowed !important;
+}
+.extendify-agent-highlighter-mode .wp-block-spacer {
+	pointer-events: none !important;
+}
+.extendify-agent-highlighter-mode a,
+.extendify-agent-highlighter-mode .wp-lightbox-container img,
+.extendify-agent-highlighter-mode button,
+.extendify-agent-highlighter-mode [role="button"],
+.extendify-agent-highlighter-mode [role="link"] {
+	cursor: crosshair !important;
+	text-decoration: none !important;
+	pointer-events: none !important;
+}

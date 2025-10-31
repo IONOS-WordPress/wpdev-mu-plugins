@@ -1,0 +1,15 @@
+/* Adding CSS classes should be done with consideration and rarely */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.extendify-recommendations button:not(:disabled) {
+	@apply cursor-pointer;
+}
+
+.extendify-recommendations *,
+.extendify-recommendations *:after,
+.extendify-recommendations *:before {
+	box-sizing: border-box;
+	border: 0 solid #e5e7eb;
+}

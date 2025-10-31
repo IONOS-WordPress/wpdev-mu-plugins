@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.extendify-draft button:not(:disabled) {
+	@apply cursor-pointer;
+}
+
+.extendify-draft {
+	--tw-ring-inset: var(--tw-empty, /*!*/ /*!*/);
+	--tw-ring-offset-width: 0px;
+	--tw-ring-offset-color: transparent;
+	--tw-ring-color: var(--ext-design-main, #2c39bd);
+	--tw-translate-x: 0;
+	--tw-translate-y: 0;
+	--tw-rotate: 0;
+	--tw-skew-x: 0;
+	--tw-skew-y: 0;
+	--tw-scale-x: 1;
+	--tw-scale-y: 1;
+}
+
+.extendify-draft *,
+.extendify-draft *:after,
+.extendify-draft *:before {
+	box-sizing: border-box;
+	/* border: 0 solid #e5e7eb; */
+}
+
+.extendify-draft .completion:after {
+	content: "";
+	display: block;
+	position: sticky;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 1em;
+	background: linear-gradient(
+		to bottom,
+		rgba(240, 240, 240, 0),
+		rgb(240, 240, 240)
+	);
+	pointer-events: none;
+}
+
+.extendify-draft .completion h1 {
+	font-size: 1em;
+	font-weight: 600;
+	margin-top: 0.67em;
+	margin-bottom: 0.67em;
+	line-height: 1em;
+}
+
+.extendify-draft .completion h1:first-child {
+	margin-top: 0;
+}
+
+.extendify-draft .completion h2 {
+	font-size: 1em;
+	font-weight: 600;
+	margin-top: 0.67em;
+	margin-bottom: 0.67em;
+	line-height: 1em;
+}
+
+.extendify-draft .completion h3 {
+	font-size: 1em;
+	font-weight: 600;
+	margin-top: 0.67em;
+	margin-bottom: 0.67em;
+	line-height: 1em;
+	text-transform: none;
+}
+
+.extendify-draft .completion p:last-child {
+	margin-bottom: 0;
+}
+#extendify-draft\:draft,
+.extendify-draft.h-full {
+	/* minus the bottom status bar */
+	height: calc(100% - 25px) !important;
+}
+
+@keyframes extendifyDraftPulse {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.5;
+	}
+}
+@keyframes extendifyDraftCallout {
+	0%,
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+	50% {
+		opacity: 0.7;
+		transform: scale(1.01);
+	}
+}
+
+.extendify-draft .animate-pulse {
+	animation: extendifyDraftPulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+.extendify-draft .animate-pulse-flash {
+	animation: extendifyDraftCallout 0.5s cubic-bezier(0.42, 0, 0.58, 1);
+}

@@ -1,0 +1,30 @@
+/* Adding CSS classes should be done with consideration and rarely */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.extendify-shared button:not(:disabled) {
+	@apply cursor-pointer;
+}
+
+.extendify-shared {
+	--tw-ring-inset: var(--tw-empty, /*!*/ /*!*/);
+	--tw-ring-offset-width: 0px;
+	--tw-ring-offset-color: transparent;
+	--tw-ring-color: var(--ext-design-main, #2c39bd);
+	--tw-translate-x: 0;
+	--tw-translate-y: 0;
+	--tw-rotate: 0;
+	--tw-skew-x: 0;
+	--tw-skew-y: 0;
+	--tw-scale-x: 1;
+	--tw-scale-y: 1;
+}
+
+.extendify-shared *,
+.extendify-shared *:after,
+.extendify-shared *:before {
+	/* no !important */
+	box-sizing: border-box;
+	border: 0 solid #e5e7eb;
+}
