@@ -169,6 +169,11 @@ function _install()
       //   }
   }
   \update_option(WP_OPTION_LAST_INSTALL_DATA, $current_install_data, true);
+
+  if( empty(\get_option('extendify_attempted_redirect_count'))) {
+    \update_option('extendify_attempted_redirect_count', 3);
+    wp_redirect(\admin_url('admin.php?page=extendify-launch'));
+  }
 }
 
 function update_plugin($plugin_slug, $activate = true)
